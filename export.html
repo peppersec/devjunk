@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        window.addEventListener('message', messageHandler, false)
+
+        function messageHandler(event) {
+          const protocol = event.origin.startsWith('http://') ? 'http' : 'https'
+          const origin = `${protocol}://app.tornado.cash`
+          if (event.origin !== origin) {
+            return
+          }
+
+          const data = window.localStorage.getItem('mixerV2')
+
+          if (data) {
+            event.source.postMessage(data, origin)
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
